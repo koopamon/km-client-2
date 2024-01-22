@@ -751,13 +751,19 @@ class BattleTooltips {
 				text += `<p class="movetag">&#x2713; Recoil <small>(boosted by Reckless)</small></p>`;
 			}
 			if (move.flags.bullet) {
-				text += `<p class="movetag">&#x2713; Bullet-like <small>(doesn't affect Bulletproof pokemon)</small></p>`;
+				text += `<p class="movetag">&#x2713; Bullet-like <small>(doesn't affect Bulletproof pokemon & is boosted by Star Bat)</small></p>`;
 			}
 			if (move.flags.slicing) {
 				text += `<p class="movetag">&#x2713; Slicing <small>(boosted by Sharpness)</small></p>`;
 			}
 			if (move.flags.wind) {
 				text += `<p class="movetag">&#x2713; Wind <small>(activates Wind Power and Wind Rider)</small></p>`;
+			}
+			if (move.flags.hammer && ability === 'powerhammer') {
+				text += `<p class="movetag">&#x2713; Hammer <small>(boosted by Power Hammer)</small></p>`;
+			}
+			if (move.flags.slicing && ability === 'starsword') {
+				text += `<p class="movetag">&#x2713; Slicing <small>(boosted by Star Sword)</small></p>`;
 			}
 		}
 		return text;
@@ -1020,6 +1026,12 @@ class BattleTooltips {
 			} else if (this.battle.gen < 2 && pokemon.status === 'brn') {
 				stats.atk = Math.floor(stats.atk * 0.5);
 			}
+			
+			if (this.battle.gen > 2 && ability === 'frostboost') {
+				stats.spa = Math.floor(stats.spa * 1.5);
+			} else if (this.battle.gen < 2 && pokemon.status === 'fbt') {
+				stats.spa = Math.floor(stats.spa * 0.5);
+			}
 
 			if (this.battle.gen > 2 && ability === 'quickfeet') {
 				stats.spe = Math.floor(stats.spe * 1.5);
@@ -1122,6 +1134,9 @@ class BattleTooltips {
 					if (ability === 'chlorophyll') {
 						speedModifiers.push(2);
 					}
+					if (ability === 'sunsprint') {
+						speedModifiers.push(2);
+					}
 					if (ability === 'solarpower') {
 						stats.spa = Math.floor(stats.spa * 1.5);
 					}
@@ -1144,12 +1159,19 @@ class BattleTooltips {
 					if (ability === 'swiftswim') {
 						speedModifiers.push(2);
 					}
+					if (ability === 'aquaamplify') {
+						stats.spd *= 2;
+					}
 				}
 			}
 		}
 		if (ability === 'defeatist' && serverPokemon.hp <= serverPokemon.maxhp / 2) {
 			stats.atk = Math.floor(stats.atk * 0.5);
 			stats.spa = Math.floor(stats.spa * 0.5);
+		}
+		if (ability === 'frozenshell' && serverPokemon.hp <= serverPokemon.maxhp / 2) {
+			stats.atk = Math.floor(stats.def * 2.0);
+			stats.spa = Math.floor(stats.spdef * 2.0);
 		}
 		if (clientPokemon) {
 			if (clientPokemon.volatiles['slowstart']) {
@@ -1232,6 +1254,9 @@ class BattleTooltips {
 		}
 		if (ability === 'furcoat') {
 			stats.def *= 2;
+		}
+		if (ability === 'blubberbody') {
+			stats.spd *= 2;
 		}
 		if (this.battle.abilityActive('Vessel of Ruin')) {
 			if (ability !== 'vesselofruin') {

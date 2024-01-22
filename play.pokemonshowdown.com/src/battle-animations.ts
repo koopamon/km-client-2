@@ -2793,6 +2793,8 @@ export class PokemonSprite extends Sprite {
 			status += '<span class="par">PAR</span> ';
 		} else if (pokemon.status === 'frz') {
 			status += '<span class="frz">FRZ</span> ';
+		} else if (pokemon.status === 'fbt') {
+			status += '<span class="fbt">FBT</span> ';
 		}
 		if (pokemon.terastallized) {
 			status += `<img src="${Dex.resourcePrefix}sprites/types/${encodeURIComponent(pokemon.terastallized)}.png" alt="${pokemon.terastallized}" class="pixelated" /> `;
@@ -5938,6 +5940,57 @@ export const BattleStatusAnims: AnimTable = {
 		},
 	},
 	frz: {
+		anim(scene, [attacker]) {
+			scene.showEffect('icicle', {
+				x: attacker.x - 30,
+				y: attacker.y,
+				z: attacker.z,
+				scale: 0.5,
+				opacity: 0.5,
+				time: 200,
+			}, {
+				scale: 0.9,
+				opacity: 0,
+				time: 600,
+			}, 'linear', 'fade');
+			scene.showEffect('icicle', {
+				x: attacker.x,
+				y: attacker.y - 30,
+				z: attacker.z,
+				scale: 0.5,
+				opacity: 0.5,
+				time: 300,
+			}, {
+				scale: 0.9,
+				opacity: 0,
+				time: 650,
+			}, 'linear', 'fade');
+			scene.showEffect('icicle', {
+				x: attacker.x + 15,
+				y: attacker.y,
+				z: attacker.z,
+				scale: 0.5,
+				opacity: 0.5,
+				time: 400,
+			}, {
+				scale: 0.9,
+				opacity: 0,
+				time: 700,
+			}, 'linear', 'fade');
+			scene.showEffect('wisp', {
+				x: attacker.x,
+				y: attacker.y,
+				z: attacker.z,
+				scale: 1,
+				opacity: 0.5,
+			}, {
+				scale: 3,
+				opacity: 0,
+				time: 600,
+			}, 'linear', 'fade');
+		},
+	},
+	fbt: {
 		anim(scene, [attacker]) {
 			scene.showEffect('icicle', {
 				x: attacker.x - 30,

@@ -20082,6 +20082,37 @@ export const BattleMoveAnims: AnimTable = {
 			}, 'ballistic');
 		},
 	},
+	secretseeds: {
+		anim(scene, [attacker, defender]) {
+			scene.showEffect('leaf1', {
+				x: attacker.x,
+				y: attacker.y,
+				z: attacker.z,
+				scale: 0.5,
+				opacity: 0.5,
+			}, {
+				x: +5,
+				y: defender.y - 40,
+				z: defender.z,
+				scale: 0.3,
+				opacity: 1,
+			}, 'ballistic');
+			scene.showEffect('leaf2', {
+				x: attacker.x,
+				y: attacker.y,
+				z: attacker.z,
+				scale: 0.5,
+				opacity: 0.5,
+				time: 200,
+			}, {
+				x: -15,
+				y: defender.y - 35,
+				z: defender.z,
+				scale: 0.3,
+				opacity: 1,
+			}, 'ballistic');
+		},
+	},
 	gmaxsteelsurge: {
 		anim(scene, [attacker, defender]) {
 			scene.backgroundEffect('#000000', 1200, 0.3);
